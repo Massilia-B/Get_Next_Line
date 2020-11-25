@@ -6,29 +6,11 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 15:06:47 by user42            #+#    #+#             */
-/*   Updated: 2020/11/24 18:36:39 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/25 12:48:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-static void	ft_strdel(char *str)
-{
-	int i;
-	int j;	
-
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	j = 0;
-	i++;
-	while (str[i + j])
-	{
-		str[j] = str[i + j];
-		j++;
-	}
-	str[j] = '\0';
-}
 
 static char	*ft_getline(char *str)
 {
@@ -51,23 +33,33 @@ static char	*ft_getline(char *str)
 
 static int	ft_is_line(int ret, char **line, char **str, int fd)
 {
-	if ((ret == 0 && !*str) || !ft_strchr(str[fd], '\n'))
+	if (ret < 0)
+		return (-1);
+	if (ret == 0 && !str[fd])
 	{
 		*line = ft_strdup("");
-		return (0);
+		free(str[fd]);
 	}
-	if (ft_strchr(str[fd], '\n'))
+	else if (ft_strchr(str[fd], '\n'))
 	{
 		*line = ft_getline(str[fd]);
 		ft_strdel(str[fd]);
 		if (str[fd][0] == '\0')
+		{
+			free(str[fd]);
 			return (0);
+		}
 		return (1);
+	}
+	else if (!ft_strchr(str[fd], '\n') && ret == 0)
+	{	
+		*line = ft_getline(str[fd]);
+		ft_strdel(str[fd]);
 	}
 	return (0);
 }
 
-int	get_next_line_bonus(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	char *buff;
 	static char *str[FD_MAX];
@@ -92,49 +84,72 @@ int	get_next_line_bonus(int fd, char **line)
 			*line = ft_getline(str[fd]);
 			ft_strdel(str[fd]);
 			if (ret == 0 && str[fd][0] == '\0')
-				return (0);
+				break ;
 			return(1);
 		}
 	}
 	free(buff);
 	buff = NULL;
-	return (ft_is_line(ret, line, &str[fd], fd));
+	return (ft_is_line(ret, line, str, fd));
 
 }
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-void	ft_putstr(char *str)
-{
-	int l;
-
-	if (!str)
-		return ;
-	l = ft_strlen(str);
-	write(1, str, l);
-}
-
-int main(int argc, char **argv)
-{
-	int fd;
+/*int main(int ac, char **av)
+{ 
+	int fd1; 
+	int fd2;
+	int fd3; 
+	char *line; 
+	char *file1; 
+	char *file2; 
+	char *file3;
 	int result = 1;
-	char *line;
-
-	line = NULL;
-	if (argc == 1)
-		fd = 0;
-	else
-		fd = open(argv[1], O_RDONLY); 
-	while(result)
+	
+		
+	file1 = av[1]; 
+	file2 = av[2]; 
+	file3 = av[3]; 
+	
+	if (ac == 1)
 	{
-		result = get_next_line_bonus(fd, &line);
-		printf("\n----result = [%d]\n", result);
-		ft_putstr(line);
+		fd1 = 0;
+		fd2 = 0;
+		fd3 = 0;
 	}
-	if (close(fd) == -1)
-		return (-1);
+	else
+	{
+		fd1 = open(file1, O_RDONLY); 
+		fd2 = open(file2, O_RDONLY); 
+		fd3 = open(file3, O_RDONLY); 
+	}
+	while (result)
+	{	
+		result = get_next_line(fd1, &line); 
+		printf("1) ---- lign [%s] \t et result = [%d]\n", line, result); 
+	}
 	free(line);
-	return (0);
-}
+	result = 1;
+	while (result)
+	{
+		result = get_next_line(fd2, &line); 
+		printf("2) ---- lign [%s] \t et result = [%d]\n", line, result); 
+	}
+	free(line);
+result = 1;
+	while (result)
+	{
+		result = get_next_line(fd3, &line); 
+		printf("3) ---- lign [%s] \t et result = [%d]\n", line, result); 
+	}
+	free(line);
+	close(fd1); 
+	close(fd2); 
+	close(fd3); 
+		printf("3) str = [%s], line = [%s] \n", str[fd], *line);
+		printf("2) str = [%s], line = [%s] \n", str[fd], *line);
+		printf("1) str = [%s], line = [%s] \n", str[fd], *line);
+		printf("6) str = [%s], line = [%s] \n", str[fd], *line);
+		printf("5) str = [%s], line = [%s] \n", str[fd], *line);
+		printf("4) str = [%s], line = [%s] \n", str[fd], *line);
+	printf("4.000) str = [%s], line = [%s] \n", str[fd], *line);
+	return 0;
+}*/

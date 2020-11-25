@@ -6,11 +6,21 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:54:36 by user42            #+#    #+#             */
-/*   Updated: 2020/11/24 15:28:04 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/25 12:02:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
 
 char	*ft_strdup(char *src)
 {
@@ -18,7 +28,7 @@ char	*ft_strdup(char *src)
 	char	*dest;
 	int	l;
 
-	l = ft_strlen(src);	
+	l = ft_strlen(src);
 	if (!(dest = (char *)malloc(sizeof(char) * (l + 1))))
 		return (0);
 	i = 0;
@@ -29,16 +39,6 @@ char	*ft_strdup(char *src)
 	}
 	dest[i] = '\0';
 	return (dest);
-}
-
-int	ft_strlen(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -62,6 +62,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	dest[j] = 0;
 	return (dest);
 }
+
 char	*ft_strchr(char *s, int c)
 {
 	while (*s)
@@ -73,4 +74,22 @@ char	*ft_strchr(char *s, int c)
 	if (c == 0)
 		return ((char *)s);
 	return (NULL);
+}
+
+void	ft_strdel(char *str)
+{
+	int i;
+	int j;	
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	j = 0;
+	i++;
+	while (str[i + j])
+	{
+		str[j] = str[i + j];
+		j++;
+	}
+	str[j] = '\0';
 }

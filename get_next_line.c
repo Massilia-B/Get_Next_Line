@@ -6,33 +6,12 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 14:40:30 by user42            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/11/24 18:29:32 by user42           ###   ########.fr       */
-=======
+/*   Updated: 2020/11/25 11:59:42 by user42           ###   ########.fr       */
 /*   Updated: 2020/11/24 18:22:37 by user42           ###   ########.fr       */
->>>>>>> c2de3b3df4b90dde57eaf5cb54117dc1061dd353
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-static void	ft_strdel(char *str)
-{
-	int i;
-	int j;	
-
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	j = 0;
-	i++;
-	while (str[i + j])
-	{
-		str[j] = str[i + j];
-		j++;
-	}
-	str[j] = '\0';
-}
 
 static char	*ft_getline(char *str)
 {
@@ -57,18 +36,24 @@ static int	ft_is_line(int ret, char **line, char *str)
 {
 	if (ret < 0)
 		return (-1);
-	if ((ret == 0 && !str) || !ft_strchr(str, '\n'))
+	if (ret == 0 && !str)
 	{
 		*line = ft_strdup("");
-		return (0);
-	}
-	if (ft_strchr(str, '\n'))
+	}	
+	else if (ft_strchr(str, '\n'))
 	{
+	//	printf("5) str = [%s], line = [%s] \n", str, *line);
 		*line = ft_getline(str);
 		ft_strdel(str);
 		if (str[0] == '\0')
 			return (0);
 		return (1);
+	}
+	else if (!ft_strchr(str, '\n') && ret == 0)
+	{	
+	//	printf("6) str = [%s], line = [%s] \n", str, *line);
+		*line = ft_getline(str);
+		ft_strdel(str);
 	}
 	return (0);
 }
@@ -89,14 +74,18 @@ int	get_next_line(int fd, char **line)
 			str = ft_strdup(buff);
 		else
 		{
+		//	printf("2) str = [%s], line = [%s] \n", str, *line);
 			temp = ft_strjoin(str,buff);
 			free(str);
 			str = temp;
 		}
+		//	printf("1) str = [%s], line = [%s] \n", str, *line);
 		if (ft_strchr(str, '\n'))
 		{
 			*line = ft_getline(str);
+		//	printf("3.1) str = [%s], line = [%s] \n", str, *line);
 			ft_strdel(str);
+		//	printf("3) str = [%s], line = [%s] \n", str, *line);
 			if (ret == 0 && str[0] == '\0')
 				break ;
 			return(1);
@@ -106,23 +95,6 @@ int	get_next_line(int fd, char **line)
 	buff = NULL;
 	return (ft_is_line(ret, line, str));
 
-}
-<<<<<<< HEAD
-=======
-
->>>>>>> c2de3b3df4b90dde57eaf5cb54117dc1061dd353
-void	ft_putstr(char *str)
-{
-	int l;
-
-	if (!str)
-		return ;
-	l = ft_strlen(str);
-	write(1, str, l);
-}
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
 }
 
 int main(int argc, char **argv)
@@ -139,8 +111,8 @@ int main(int argc, char **argv)
 	while(result)
 	{
 		result = get_next_line(fd, &line);
-		printf("\n----result = [%d]\n", result);
-		ft_putstr(line);
+		printf("\n----result = [%d]", result);
+		printf("Final line ==> [%s]\n", line);
 	}
 	free(line);
 	if (close(fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 15:11:20 by user42            #+#    #+#             */
-/*   Updated: 2020/11/24 15:12:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/25 12:27:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 255
-#endif
-
 #ifndef FD_MAX
 # define FD_MAX 256
 #endif
@@ -31,6 +27,7 @@ char	*ft_strdup(char *src);
 int	ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(char *s, int c);
+void	ft_strdel(char *str);
 
 #endif
 
