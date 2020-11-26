@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 15:06:47 by user42            #+#    #+#             */
-/*   Updated: 2020/11/25 12:48:27 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/25 19:02:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,26 @@ static char	*ft_getline(char *str)
 	return (dest);
 }
 
-static int	ft_is_line(int ret, char **line, char **str, int fd)
+static int	ft_is_line(int ret, char **line, char **str)
 {
 	if (ret < 0)
 		return (-1);
-	if (ret == 0 && !str[fd])
+	if (ret == 0 && !*str)
 	{
 		*line = ft_strdup("");
-		free(str[fd]);
+	//	free(*str);
+		return (0);
 	}
-	else if (ft_strchr(str[fd], '\n'))
-	{
-		*line = ft_getline(str[fd]);
-		ft_strdel(str[fd]);
-		if (str[fd][0] == '\0')
-		{
-			free(str[fd]);
-			return (0);
-		}
-		return (1);
-	}
-	else if (!ft_strchr(str[fd], '\n') && ret == 0)
+	if (!ft_strchr(*str, '\n'))
 	{	
-		*line = ft_getline(str[fd]);
-		ft_strdel(str[fd]);
+		*line = ft_getline(*str);
+		free(*str);
+		*str = NULL;
+		return (0);
 	}
-	return (0);
+	*line = ft_getline(*str);
+	ft_strdel(*str);
+	return (1);
 }
 
 int	get_next_line(int fd, char **line)
@@ -80,20 +74,14 @@ int	get_next_line(int fd, char **line)
 			str[fd] = temp;
 		}
 		if (ft_strchr(str[fd], '\n'))
-		{
-			*line = ft_getline(str[fd]);
-			ft_strdel(str[fd]);
-			if (ret == 0 && str[fd][0] == '\0')
-				break ;
-			return(1);
-		}
+			break ;
 	}
 	free(buff);
 	buff = NULL;
-	return (ft_is_line(ret, line, str, fd));
+	return (ft_is_line(ret, line, &str[fd]));
 
 }
-/*int main(int ac, char **av)
+int main(int ac, char **av)
 { 
 	int fd1; 
 	int fd2;
@@ -144,12 +132,5 @@ result = 1;
 	close(fd1); 
 	close(fd2); 
 	close(fd3); 
-		printf("3) str = [%s], line = [%s] \n", str[fd], *line);
-		printf("2) str = [%s], line = [%s] \n", str[fd], *line);
-		printf("1) str = [%s], line = [%s] \n", str[fd], *line);
-		printf("6) str = [%s], line = [%s] \n", str[fd], *line);
-		printf("5) str = [%s], line = [%s] \n", str[fd], *line);
-		printf("4) str = [%s], line = [%s] \n", str[fd], *line);
-	printf("4.000) str = [%s], line = [%s] \n", str[fd], *line);
 	return 0;
-}*/
+}
