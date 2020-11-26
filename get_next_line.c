@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 14:40:30 by user42            #+#    #+#             */
-/*   Updated: 2020/11/25 19:08:16 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/26 14:09:42 by user42           ###   ########.fr       */
 /*   Updated: 2020/11/24 18:22:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -15,8 +15,8 @@
 
 static char	*ft_getline(char *str)
 {
-	int i;
-	char *dest;
+	int	i;
+	char	*dest;
 	int	l;
 
 	l = ft_strlen(str);
@@ -43,7 +43,7 @@ static int	ft_is_line(int ret, char **line, char **str)
 	}
 	if (!ft_strchr(*str, '\n'))
 	{
-		*line = ft_getline(*str);	
+		*line = ft_getline(*str);
 		free(*str);
 		*str = NULL;
 		return (0);
@@ -60,16 +60,17 @@ int	get_next_line(int fd, char **line)
 	int ret;
 	char *temp;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0 || (!(buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
+	if (fd < 0 || !line || BUFF_SIZE <= 0 
+	|| (!(buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1)))))
 		return (-1);
-	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
+	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
 		if (str == NULL)
 			str = ft_strdup(buff);
 		else
 		{
-			temp = ft_strjoin(str,buff);
+			temp = ft_strjoin(str, buff);
 			free(str);
 			str = temp;
 		}

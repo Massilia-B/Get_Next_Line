@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 15:06:47 by user42            #+#    #+#             */
-/*   Updated: 2020/11/25 19:02:15 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/26 14:16:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*ft_getline(char *str)
 {
-	int i;
-	char *dest;
+	int	i;
+	char	*dest;
 	int	l;
 
 	l = ft_strlen(str);
@@ -38,7 +38,6 @@ static int	ft_is_line(int ret, char **line, char **str)
 	if (ret == 0 && !*str)
 	{
 		*line = ft_strdup("");
-	//	free(*str);
 		return (0);
 	}
 	if (!ft_strchr(*str, '\n'))
@@ -48,6 +47,7 @@ static int	ft_is_line(int ret, char **line, char **str)
 		*str = NULL;
 		return (0);
 	}
+
 	*line = ft_getline(*str);
 	ft_strdel(*str);
 	return (1);
@@ -55,12 +55,13 @@ static int	ft_is_line(int ret, char **line, char **str)
 
 int	get_next_line(int fd, char **line)
 {
-	char *buff;
-	static char *str[FD_MAX];
-	int ret;
-	char *temp;
+	char		*buff;
+	static char	*str[FD_MAX];
+	int		ret;
+	char		*temp;
 
-	if (fd < 0 || fd > FD_MAX || !line || BUFFER_SIZE <= 0 || (!(buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
+	if (fd < 0 || fd > FD_MAX || !line || BUFFER_SIZE <= 0 
+	|| (!(buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
 		return (-1);
 	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
@@ -69,7 +70,7 @@ int	get_next_line(int fd, char **line)
 			str[fd] = ft_strdup(buff);
 		else
 		{
-			temp = ft_strjoin(str[fd],buff);
+			temp = ft_strjoin(str[fd], buff);
 			free(str[fd]);
 			str[fd] = temp;
 		}
@@ -79,9 +80,9 @@ int	get_next_line(int fd, char **line)
 	free(buff);
 	buff = NULL;
 	return (ft_is_line(ret, line, &str[fd]));
-
 }
-int main(int ac, char **av)
+
+/*int main(int ac, char **av)
 { 
 	int fd1; 
 	int fd2;
@@ -133,4 +134,4 @@ result = 1;
 	close(fd2); 
 	close(fd3); 
 	return 0;
-}
+}*/

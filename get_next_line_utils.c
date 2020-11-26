@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:54:36 by user42            #+#    #+#             */
-/*   Updated: 2020/11/25 12:02:37 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/26 14:10:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_strlen(char *str)
 
 char	*ft_strdup(char *src)
 {
-	int		i;
+	int	i;
 	char	*dest;
 	int	l;
 
@@ -79,7 +79,7 @@ char	*ft_strchr(char *s, int c)
 void	ft_strdel(char *str)
 {
 	int i;
-	int j;	
+	int j;
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
