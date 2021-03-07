@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 16:29:53 by user42            #+#    #+#             */
-/*   Updated: 2020/11/26 14:10:53 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:42:30 by masboula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-int	get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line);
 char	*ft_strdup(char *src);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(char *s, int c);
 void	ft_strdel(char *str);
-int	ft_strlen(char *str);
+int		ft_strlen(char *str);
 
 #endif

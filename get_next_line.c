@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: masboula <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/19 14:40:30 by user42            #+#    #+#             */
-/*   Updated: 2020/11/26 14:09:42 by user42           ###   ########.fr       */
-/*   Updated: 2020/11/24 18:22:37 by user42           ###   ########.fr       */
+/*   Created: 2020/11/26 15:06:52 by masboula          #+#    #+#             */
+/*   Updated: 2020/11/26 15:38:11 by masboula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +14,9 @@
 
 static char	*ft_getline(char *str)
 {
-	int	i;
+	int		i;
 	char	*dest;
-	int	l;
+	int		l;
 
 	l = ft_strlen(str);
 	if (!(dest = (char *)malloc(sizeof(char) * (l + 1))))
@@ -53,17 +52,17 @@ static int	ft_is_line(int ret, char **line, char **str)
 	return (1);
 }
 
-int	get_next_line(int fd, char **line)
+int			get_next_line(int fd, char **line)
 {
-	char *buff;
-	static char *str;
-	int ret;
-	char *temp;
+	char		*buff;
+	static char	*str;
+	int			ret;
+	char		*temp;
 
-	if (fd < 0 || !line || BUFF_SIZE <= 0 
-	|| (!(buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1)))))
+	if (fd < 0 || !line || BUFFER_SIZE <= 0
+	|| (!(buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
 		return (-1);
-	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
+	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
 		if (str == NULL)
@@ -80,26 +79,4 @@ int	get_next_line(int fd, char **line)
 	free(buff);
 	buff = NULL;
 	return (ft_is_line(ret, line, &str));
-
 }
-
-/*int main(int ac, char **av)
-{
-	int fd;
-	int result = 1;
-	char *line;
-
-	if (ac > 1)
-		fd = open(av[1], O_RDONLY);
-	else
-		fd = 0;
-	line = NULL;
-	while (result)
-	{
-		result = get_next_line(fd, &line);
-		printf("---- result [%d] -----  line [%s]\n", result, line);
-	}
-	free(line);
-	close(fd);
-	return (0);
-}*/

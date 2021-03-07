@@ -6,13 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 17:54:36 by user42            #+#    #+#             */
-/*   Updated: 2020/11/26 14:12:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/11/26 15:49:15 by masboula         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-int	ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int i;
 
@@ -24,9 +24,9 @@ int	ft_strlen(char *str)
 
 char	*ft_strdup(char *src)
 {
-	int	i;
+	int		i;
 	char	*dest;
-	int	l;
+	int		l;
 
 	l = ft_strlen(src);
 	if (!(dest = (char *)malloc(sizeof(char) * (l + 1))))
