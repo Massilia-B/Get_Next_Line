@@ -4,7 +4,7 @@
 
 **Subject**
 
-Learning how to read a file or the standard input line by line using static variables. You have to read all the file until the EOF (end of file). You have to return 1 each time you read a line and 0 when you reach the EOF. 
+Learning how to read a file or the standard input line by line using static variables. You have to read all the file until the EOF (end of file). You have to return 1 each time you read a line (\n) and 0 when you reach the EOF. 
 
 **Apprehend the project**
 
